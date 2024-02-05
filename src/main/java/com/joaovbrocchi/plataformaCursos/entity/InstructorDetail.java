@@ -1,7 +1,6 @@
-package com.joaovbrocchi.crudDemo.entity;
+package com.joaovbrocchi.plataformaCursos.entity;
 
 import jakarta.persistence.*;
-import org.springframework.orm.jpa.vendor.Database;
 
 @Entity
 @Table(name="instructor_detail")

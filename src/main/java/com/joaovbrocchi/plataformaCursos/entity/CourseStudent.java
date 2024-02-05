@@ -1,4 +1,4 @@
-package com.joaovbrocchi.crudDemo.entity;
+package com.joaovbrocchi.plataformaCursos.entity;
 
 import jakarta.persistence.*;
 

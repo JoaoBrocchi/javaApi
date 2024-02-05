@@ -1,8 +1,6 @@
-package com.joaovbrocchi.crudDemo.entity;
+package com.joaovbrocchi.plataformaCursos.entity;
 
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name="review")

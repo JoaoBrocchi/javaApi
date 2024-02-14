@@ -10,13 +10,11 @@ import java.util.Optional;
 
 @Service
 public class InstructorService {
-
-    private final InstructorRepository instructorRepository;
-
     @Autowired
-    public InstructorService(InstructorRepository instructorRepository) {
-        this.instructorRepository = instructorRepository;
-    }
+    private InstructorRepository instructorRepository;
+
+
+
 
     public List<Instructor> getAllInstructors() {
         return instructorRepository.findAll();
@@ -27,12 +25,24 @@ public class InstructorService {
     }
 
     public Instructor saveInstructor(Instructor instructor) {
-        return instructorRepository.save(instructor);
+        if (!checkIfInstructorExist(instructor)) {
+            return instructorRepository.save(instructor);
+        } else {
+            throw new RuntimeException("Já existe esse instrutor");
+        }
     }
+    public boolean checkIfInstructorExist(Instructor instructor) {
+        return instructorRepository.findById(instructor.getId()).isPresent();
+    }
+
+
 
     public void deleteInstructor(int instructorId) {
         instructorRepository.deleteById(instructorId);
     }
 
 
+    public List<Instructor> findAll() {
+        return instructorRepository.findAll();
+    }
 }

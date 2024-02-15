@@ -1,7 +1,8 @@
-package com.joaovbrocchi.plataformaCursos.service;
+package com.joaovbrocchi.plataformaCursos.unity.repository.service;
 import com.joaovbrocchi.plataformaCursos.entity.Instructor;
 import com.joaovbrocchi.plataformaCursos.repository.InstructorRepository;
 
+import com.joaovbrocchi.plataformaCursos.service.InstructorService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -13,7 +13,6 @@ public class Instructor {
             cascade = {
             CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH
     }, fetch = FetchType.LAZY)
-    @JoinColumn(name= "instructor_id")
     private List<Course> courses;
 
 

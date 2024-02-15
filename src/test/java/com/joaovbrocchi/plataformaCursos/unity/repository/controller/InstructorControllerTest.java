@@ -1,4 +1,4 @@
-package com.joaovbrocchi.plataformaCursos.controller;
+package com.joaovbrocchi.plataformaCursos.unity.repository.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,8 +1,8 @@
-DROP SCHEMA IF EXISTS `hb-05-many-to-many`;
+DROP database  IF EXISTS `plataforma-curso`;
 
-CREATE SCHEMA `hb-05-many-to-many`;
+CREATE database `plataforma-curso`;
 
-use `hb-05-many-to-many`;
+use `plataforma-curso`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 

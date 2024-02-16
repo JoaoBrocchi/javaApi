@@ -26,7 +26,7 @@ public class InstructorController {
         return instructorService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Instructor> findInstructorById(@PathVariable int id) {
         Optional<Instructor> instructorOptional = instructorService.getInstructorById(id);
 

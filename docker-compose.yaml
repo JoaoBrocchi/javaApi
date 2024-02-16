@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:latest
+    command: "mysqld --default-authentication-plugin=mysql_native_password"
+    restart: always
+    environment:
+      TZ: America/Sao_paulo
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 1234
+      MYSQL_DATABASE: plataforma-curso
+      MYSQL_ROOT_HOST : '%'
+      MYSQL_TCP_PORT: 3308
+    ports:
+      - 3308:3308
+    expose:
+      - 3308
+    networks:
+      - joaovbrocchi-network
+
+  plataforma-curso:
+    image: joaovbrocchi78/plataforma-curso
+    restart: always
+    depends_on: db
+    build: ./
+    working_dir: ./
+
+    environment:
+      TZ: America/Sao_paulo
+      spring.datasource.url: jdbc:mysql://db:3308/plataforma-curso
+      spring.datasource.username: root
+      spring.datasource.password: 1234
+
+
+    ports:
+      - 8123:8123
+    command: mvn spring-boot:run
+    expose:
+      - 8123
+    networks:
+      - joaovbrocchi-network
+
+networks:
+  joaovbrocchi-network:
+    driver: bridge
+

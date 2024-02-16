@@ -14,7 +14,10 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -41,7 +44,7 @@ public class InstructorControllerIntegrationTest extends AbstractIntegrationTest
             instructor = new Instructor(
                     "joao",
                     "brocchi",
-                    "email123@email"
+                    "email123@email.com"
             );
         }
     private void assertObjectFieldsNotNull(Object object) throws IllegalAccessException {
@@ -56,9 +59,10 @@ public class InstructorControllerIntegrationTest extends AbstractIntegrationTest
         @Test
         @Order(1)
         @DisplayName("teste de integração do create do do controller de Instructor")
-        void integrationTestGivenInstructor_when_InstructorCreate_ShouldReturnTheCreateObject() throws JsonProcessingException, IllegalAccessException {
-            var content = given()
-                    .spec(requestSpecification)
+        void integrationTestGivenInstructor_when_InstructorCreate_ShouldReturnTheCreatedObject() throws JsonProcessingException, IllegalAccessException {
+            var content =
+                    given()
+                        .spec(requestSpecification)
                         .contentType(TestConfig.CONTENT_TYPE_JSON)
                         .body(instructor)
                     .when()
@@ -73,13 +77,89 @@ public class InstructorControllerIntegrationTest extends AbstractIntegrationTest
             instructor = createdInstructor;
 
             assertObjectFieldsNotNull(createdInstructor);
-
             assertTrue(createdInstructor.getId() > 0);
 
 
 
 
         }
+    @Test
+    @Order(2)
+    @DisplayName("teste de integração do  update do controller de Instructor")
+    void integrationTestGivenInstructor_when_InstructorUpdate_ShouldReturnTheUpdatedObject(){
+            instructor.setFirstName("lucas");
+            instructor.setEmail("novo123@email.com");
+
+        var content =
+                given()
+                    .spec(requestSpecification)
+                    .contentType(TestConfig.CONTENT_TYPE_JSON)
+                    .body(instructor)
+                .when()
+                    .put()
+                .then()
+                    .statusCode(200)
+                    .extract()
+                    .body()
+                    .asString();
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("teste de integração do  update do controller de Instructor")
+    void integrationTestGivenInstructor_when_InstructorFindById_ShouldReturnTheObject(){
+        instructor.setFirstName("lucas");
+        instructor.setEmail("novo123@email.com");
+
+        var content =
+                given()
+                    .spec(requestSpecification)
+                    .pathParam("id", instructor.getId())
+                .when()
+                    .get("{id}")
+                .then()
+                    .statusCode(200)
+                    .extract()
+                    .body()
+                    .asString();
+        }
+
+    @Test
+    @Order(3)
+    @DisplayName("teste de integração do  update do controller de Instructor")
+    void integrationTestGivenInstructor_when_InstructorFindAll_ShouldReturnAllTheObject() throws JsonProcessingException {
+
+        var content =
+                given()
+                    .spec(requestSpecification)
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .extract()
+                    .body()
+                    .asString();
+        Instructor[] myArray =
+                objectMapper
+                        .readValue(content, Instructor[].class);
+        List<Instructor> instructors =  Arrays.asList(myArray);
 
 
+
+        }
+    @Test
+    @Order(3)
+    @DisplayName("teste de integração do  update do controller de Instructor")
+    void integrationTestGivenInstructor_when_InstructorDelte_ShouldReturnNoContent(){
+        var content =
+            given()
+                .spec(requestSpecification)
+                .pathParam("id", instructor.getId())
+            .when()
+                .delete("{id}")
+            .then()
+                .statusCode(204);
 }
+
+    }
+
